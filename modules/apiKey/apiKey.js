@@ -1,0 +1,1 @@
+angular.module('lub-tmdb-apiKey',[]).value('lubTmdbApiKey','');
