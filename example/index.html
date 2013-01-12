@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html data-ng-app='lub-tmdb-example'>
+<head>
+    <meta charset="utf-8">
+    <title>lub-tmdb-examples</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css" rel="stylesheet">
+    <style>
+
+        body {
+            padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+        }
+
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="row" ng-controller="SearchCtrl">
+        <div class="span6">
+            <form class="form-search" ng-submit="searchMovie()">
+                <input type="text" ng-model="query">
+                <button class="btn" type="submit">Search Movie</button>
+            </form>
+            <form class="form-search" ng-submit="searchCollection()">
+                <input type="text" ng-model="query">
+                <button class="btn" type="submit">Search Collection</button>
+            </form>
+            <form class="form-search" ng-submit="serchCompany()">
+                <input type="text" ng-model="query">
+                <button class="btn" type="submit">Search company</button>
+            </form>
+            <form class="form-search" ng-submit="searchPerson()">
+                <input type="text" ng-model="query">
+                <button class="btn" type="submit">Search Person</button>
+            </form>
+            <form class="form-search" ng-submit="searchList()">
+                <input type="text" ng-model="query">
+                <button class="btn" type="submit">Search List</button>
+            </form>
+            <form class="form-search" ng-submit="searchKeyword()">
+                <input type="text" ng-model="query">
+                <button class="btn" type="submit">Search Keyword</button>
+            </form>
+        </div>
+        <div class="span6">
+
+        </div>
+        <div class="row">
+            <div class="span12">
+                <h1>RAW Search Results</h1>
+                <p>
+                    <pre>{{searchResult}}</pre>
+                </p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script src="../test/lib/angular.1.1.1.js"></script>
+<script src="../build/v0.0.1/lub-tmdb.0.0.1.js"></script>
+<script>
+    var app = angular.module('lub-tmdb-example', ['lub-tmdb-api']).value('lubTmdbApiKey', '4817ea3961098299634ff3c367e44551')
+    app.controller('SearchCtrl', function ($scope, lubTmdbApiSearch) {
+        var suc = function (results) {
+            $scope.searchResult = angular.toJson(results, true);
+        };
+        var err = function (results) {
+            console.log(results);
+            $scope.searchResult = 'There was an error loading the results';
+        };
+        $scope.searchMovie = function () {
+            lubTmdbApiSearch.movie($scope.query).then(suc,err);
+        }
+        $scope.searchCollection = function () {
+            lubTmdbApiSearch.collection($scope.query).then(suc,err);
+        }
+        $scope.searchList = function () {
+            lubTmdbApiSearch.list($scope.query).then(suc,err);
+        }
+        $scope.searchCompany = function () {
+            lubTmdbApiSearch.company($scope.query).then(suc,err);
+        }
+        $scope.searchKeyword = function () {
+            lubTmdbApiSearch.keyword($scope.query).then(suc,err);
+        }
+        $scope.searchPerson = function () {
+            lubTmdbApiSearch.person($scope.query).then(suc,err);
+        }
+    });
+</script>
+</body>
+</html>

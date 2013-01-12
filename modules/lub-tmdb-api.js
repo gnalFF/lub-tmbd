@@ -1,0 +1,1 @@
+angular.module('lub-tmdb-api',['lub-tmdb-api-configuration','lub-tmdb-api-movie','lub-tmdb-api-search','lub-tmdb-config','lub-tmdb-apiKey']);

@@ -1,9 +1,6 @@
 /**
- * Created with JetBrains WebStorm.
- * User: gnalFF
- * Date: 11.01.13
- * Time: 21:14
- * To change this template use File | Settings | File Templates.
+ * Module dealing with search related stuff.
+ * http://docs.themoviedb.apiary.io/#search
  */
 angular.module('lub-tmdb-api-search', ['lub-tmdb-config', 'lub-tmdb-apiKey'])
     .factory('lubTmdbApiSearch', function ($q, lubTmdbConfig, lubTmdbApiKey, $http) {
@@ -11,10 +8,8 @@ angular.module('lub-tmdb-api-search', ['lub-tmdb-config', 'lub-tmdb-apiKey'])
             options = options || {};
             var defer = $q.defer();
             var url = lubTmdbConfig.baseURL + 'search/' + type;
-            $http({
-                method:'jsonp',
-                url:url,
-                params:angular.extend({api_key:lubTmdbApiKey, query:query}, options),
+            $http.jsonp(url,{
+                params:angular.extend({api_key:lubTmdbApiKey, query:query,callback:'JSON_CALLBACK'}, options),
                 cache:options.cache
             }).success(function (result) {
                     defer.resolve(result);
@@ -22,7 +17,7 @@ angular.module('lub-tmdb-api-search', ['lub-tmdb-config', 'lub-tmdb-apiKey'])
                     defer.reject(result);
                 });
             return defer.promise;
-        }
+        };
         return {
             movie:function (query, options) {
                 return get(query, 'movie', options);
@@ -42,5 +37,5 @@ angular.module('lub-tmdb-api-search', ['lub-tmdb-config', 'lub-tmdb-apiKey'])
             keyword:function (query, options) {
                 return get(query, 'keyword', options);
             }
-        }
-    })
+        };
+    });

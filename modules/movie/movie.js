@@ -1,9 +1,6 @@
 /**
- * Created with JetBrains WebStorm.
- * User: gnalFF
- * Date: 11.01.13
- * Time: 13:09
- * To change this template use File | Settings | File Templates.
+ * Module dealing with movie related stuff.
+ * http://docs.themoviedb.apiary.io/#movies
  */
 angular.module("lub-tmdb-api-movie", ['lub-tmdb-config', 'lub-tmdb-api-configuration', 'lub-tmdb-apiKey'])
     .factory('lubTmdbApiMovie', function (lubTmdbConfig, lubTmdbApiKey, $q,$http) {
@@ -19,10 +16,8 @@ angular.module("lub-tmdb-api-movie", ['lub-tmdb-config', 'lub-tmdb-api-configura
             }
             var url = lubTmdbConfig.baseURL + 'movie' + action;
             options = options || {};
-            $http({
-                method:'jsonp',
-                url:url,
-                params:angular.extend({api_key:lubTmdbApiKey}, options),
+            $http.jsonp(url,{
+                params:angular.extend({api_key:lubTmdbApiKey,callback:'JSON_CALLBACK'}, options),
                 cache:options.cache
             })
                 .success(function (data, status, headers, config) {
@@ -31,7 +26,7 @@ angular.module("lub-tmdb-api-movie", ['lub-tmdb-config', 'lub-tmdb-api-configura
                     defer.reject(data);
                 });
             return defer.promise;
-        }
+        };
         return {
             movie:function (movieId, options) {
                 return get(movieId, '', options);
@@ -84,5 +79,5 @@ angular.module("lub-tmdb-api-movie", ['lub-tmdb-config', 'lub-tmdb-api-configura
             rating:function (movieId,options) {
                 return get(movieId, 'rating', options);
             }
-        }
+        };
     });
