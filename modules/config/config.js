@@ -2,6 +2,5 @@
  * Module configuring basic api setup
  */
 angular.module('lub-tmdb-config', [])
-    .value('lubTmdbConfig', {
-        baseURL:"http://api.themoviedb.org/3/"
-    });
+    .value('lubTmdbBaseURL','http://api.themoviedb.org/3/')
+    .value('lubTmdbApiKey','');

@@ -17,6 +17,9 @@
 <div class="container">
     <div class="row" ng-controller="SearchCtrl">
         <div class="span6">
+            <form ng-submit='showConfig()'>
+                <button type="submit">Show configuration</button>
+            </form>
             <form class="form-search" ng-submit="searchMovie()">
                 <input type="text" ng-model="query">
                 <button class="btn" type="submit">Search Movie</button>
@@ -41,27 +44,103 @@
                 <input type="text" ng-model="query">
                 <button class="btn" type="submit">Search Keyword</button>
             </form>
+            <form class="form-search" ng-submit="movieInfos()">
+                <legend>Movie informations</legend>
+                <input type="text" ng-model='identifier'>
+
+                <p>
+                    <label>
+                        movie
+                        <input type="checkbox" ng-model='movie.movie'>
+                    </label>
+                    <label>
+                        alternativeTitles
+                        <input type="checkbox" ng-model='movie.alternativeTitles'>
+                    </label>
+                    <label>
+                        casts
+                        <input type="checkbox" ng-model='movie.casts'>
+                    </label>
+                    <label>
+                        images
+                        <input type="checkbox" ng-model='movie.images'>
+                    </label>
+                    <label>
+                        keywords
+                        <input type="checkbox" ng-model='movie.keywords'>
+                    </label>
+                    <label>
+                        releases
+                        <input type="checkbox" ng-model='movie.releases'>
+                    </label>
+                    <label>
+                        trailers
+                        <input type="checkbox" ng-model='movie.trailers'>
+                    </label>
+                    <label>
+                        translations
+                        <input type="checkbox" ng-model='movie.translations'>
+                    </label>
+                    <label>
+                        similarMovies
+                        <input type="checkbox" ng-model='movie.similarMovies'>
+                    </label>
+                    <label>
+                        lists
+                        <input type="checkbox" ng-model='movie.lists'>
+                    </label>
+                    <label>
+                        changes
+                        <input type="checkbox" ng-model='movie.changes'>
+                    </label>
+                    <label>
+                        lastest
+                        <input type="checkbox" ng-model='movie.latest'>
+                    </label>
+                    <label>
+                        upcoming
+                        <input type="checkbox" ng-model='movie.upcoming'>
+                    </label>
+                    <label>
+                        nowPlaying
+                        <input type="checkbox" ng-model='movie.nowPlaying'>
+                    </label>
+                    <label>
+                        popular
+                        <input type="checkbox" ng-model='movie.popular'>
+                    </label>
+                    <label>
+                        topRated
+                        <input type="checkbox" ng-model='movie.topRated'>
+                    </label>
+                </p>
+                <button class="btn" type="submit">GET</button>
+            </form>
         </div>
         <div class="span6">
+            <h1>RAW Search Results</h1>
 
+            <p>
+            <pre>{{searchResult}}</pre>
+            </p>
         </div>
         <div class="row">
             <div class="span12">
-                <h1>RAW Search Results</h1>
-                <p>
-                    <pre>{{searchResult}}</pre>
-                </p>
             </div>
         </div>
     </div>
 
 </div>
-
+<style>
+    label {
+        padding: 0 10px;
+    }
+</style>
 <script src="../test/lib/angular.1.1.1.js"></script>
 <script src="../build/v0.0.1/lub-tmdb.0.0.1.js"></script>
 <script>
     var app = angular.module('lub-tmdb-example', ['lub-tmdb-api']).value('lubTmdbApiKey', '4817ea3961098299634ff3c367e44551')
-    app.controller('SearchCtrl', function ($scope, lubTmdbApiSearch) {
+    app.controller('SearchCtrl', function ($scope, lubTmdbApiSearch, lubTmdbApiMovie, lubTmdbApiConfiguration) {
         var suc = function (results) {
             $scope.searchResult = angular.toJson(results, true);
         };
@@ -69,23 +148,57 @@
             console.log(results);
             $scope.searchResult = 'There was an error loading the results';
         };
+        $scope.showConfig = function(){
+            lubTmdbApiConfiguration.get().then(suc,err);
+        }
         $scope.searchMovie = function () {
-            lubTmdbApiSearch.movie($scope.query).then(suc,err);
+            lubTmdbApiSearch.movie($scope.query).then(suc, err);
         }
         $scope.searchCollection = function () {
-            lubTmdbApiSearch.collection($scope.query).then(suc,err);
+            lubTmdbApiSearch.collection($scope.query).then(suc, err);
         }
         $scope.searchList = function () {
-            lubTmdbApiSearch.list($scope.query).then(suc,err);
+            lubTmdbApiSearch.list($scope.query).then(suc, err);
         }
         $scope.searchCompany = function () {
-            lubTmdbApiSearch.company($scope.query).then(suc,err);
+            lubTmdbApiSearch.company($scope.query).then(suc, err);
         }
         $scope.searchKeyword = function () {
-            lubTmdbApiSearch.keyword($scope.query).then(suc,err);
+            lubTmdbApiSearch.keyword($scope.query).then(suc, err);
         }
         $scope.searchPerson = function () {
-            lubTmdbApiSearch.person($scope.query).then(suc,err);
+            lubTmdbApiSearch.person($scope.query).then(suc, err);
+        }
+
+        $scope.movieInfos = function () {
+            var rename = {
+                alternativeTitles:'alternative_titles',
+                similarMovies:'similar_movies',
+                nowPlaying:'now_playing',
+                topRated:'top_rated'
+            }
+            var needsNoIdentifier = ['latest', 'upcoming', 'nowPlaying', 'popular', 'topRated'];
+            var action = '';
+            var append_to_response = [];
+            angular.forEach($scope.movie, function (value, key) {
+                if (value && !action) {
+                    action = key;
+                } else if (value && action) {
+                    if (rename[key]) {
+                        append_to_response.push(rename[key]);
+                    } else {
+                        append_to_response.push(key);
+                    }
+                }
+            });
+            if (!action) {
+                action = 'movie';
+            }
+            if (needsNoIdentifier.indexOf(action) >= 0) {
+                lubTmdbApiMovie[action]({append_to_response:append_to_response.join(',')}).then(suc, err);
+            } else {
+                lubTmdbApiMovie[action]($scope.identifier, {append_to_response:append_to_response.join(',')}).then(suc, err);
+            }
         }
     });
 </script>

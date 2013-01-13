@@ -2,15 +2,17 @@
  * Module dealing with search related stuff.
  * http://docs.themoviedb.apiary.io/#search
  */
-angular.module('lub-tmdb-api-search', ['lub-tmdb-config', 'lub-tmdb-apiKey'])
-    .factory('lubTmdbApiSearch', function ($q, lubTmdbConfig, lubTmdbApiKey, $http) {
+angular.module('lub-tmdb-api-search', ['lub-tmdb-config'])
+    .factory('lubTmdbApiSearch', function ($q, lubTmdbBaseURL, lubTmdbApiKey, $http) {
         var get = function (query, type, options) {
-            options = options || {};
+            options = options || {cache:true};
+            var doCache = options.cache;
+            delete options.cache;
             var defer = $q.defer();
-            var url = lubTmdbConfig.baseURL + 'search/' + type;
+            var url = lubTmdbBaseURL+ 'search/' + type;
             $http.jsonp(url,{
                 params:angular.extend({api_key:lubTmdbApiKey, query:query,callback:'JSON_CALLBACK'}, options),
-                cache:options.cache
+                cache:doCache
             }).success(function (result) {
                     defer.resolve(result);
                 }).error(function (result) {
