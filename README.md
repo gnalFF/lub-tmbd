@@ -51,7 +51,8 @@ First, start the testacular server:
 ```bash
 $ grunt server
 ```
-Then, open your browser to http://localhost:8080 and run the watch command to re-run tests on every save:
+Then, open your browser to http://localhost:8080 or run
+
 ```bash
-$ grunt watch
+$ grunt test
 ```
