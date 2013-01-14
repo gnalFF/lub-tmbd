@@ -42,3 +42,16 @@ Before you commit, always run `grunt` to build and test everything once.
 ```bash
 $ grunt
 ```
+
+### Test & Develop
+
+The modules come with unit tests that should be run on any changes and certainly before commiting changes to the project.  The unit tests should also provide further insight into the usage of the modules.
+
+First, start the testacular server:
+```bash
+$ grunt server
+```
+Then, open your browser to http://localhost:8080 and run the watch command to re-run tests on every save:
+```bash
+$ grunt watch
+```
