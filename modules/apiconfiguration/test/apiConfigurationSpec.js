@@ -13,10 +13,6 @@
                 });
             $httpBackend.flush();
             expect(success.test).toBe(1);
-            lubTmdbApiConfiguration.get().then(function (data) {
-                success = data;
-            });
-            expect(success.test).toBe(1);
         }));
         it('should make a not success jsonp request and return a promise', inject(function (lubTmdbBaseURL, lubTmdbApiConfiguration, lubTmdbApiKey, $httpBackend) {
 
