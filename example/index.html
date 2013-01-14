@@ -15,10 +15,15 @@
 </head>
 <body>
 <div class="container">
+    <div class="row">
+        <div class="span12">
+            <h1>LUB-TMDB-API Examples</h1>
+        </div>
+    </div>
     <div class="row" ng-controller="SearchCtrl">
         <div class="span6">
             <form ng-submit='showConfig()'>
-                <button type="submit">Show configuration</button>
+                <button type="submit" class="btn">Show configuration</button>
             </form>
             <form class="form-search" ng-submit="searchMovie()">
                 <input type="text" ng-model="query">
@@ -28,7 +33,7 @@
                 <input type="text" ng-model="query">
                 <button class="btn" type="submit">Search Collection</button>
             </form>
-            <form class="form-search" ng-submit="serchCompany()">
+            <form class="form-search" ng-submit="searchCompany()">
                 <input type="text" ng-model="query">
                 <button class="btn" type="submit">Search company</button>
             </form>
@@ -139,7 +144,8 @@
 <script src="../test/lib/angular.1.1.1.js"></script>
 <script src="../build/v0.0.1/lub-tmdb.0.0.1.js"></script>
 <script>
-    var app = angular.module('lub-tmdb-example', ['lub-tmdb-api']).value('lubTmdbApiKey', '4817ea3961098299634ff3c367e44551')
+    var app = angular.module('lub-tmdb-example', ['lub-tmdb-api'])
+            .value('lubTmdbApiKey', '4817ea3961098299634ff3c367e44551')
     app.controller('SearchCtrl', function ($scope, lubTmdbApiSearch, lubTmdbApiMovie, lubTmdbApiConfiguration) {
         var suc = function (results) {
             $scope.searchResult = angular.toJson(results, true);
@@ -148,8 +154,8 @@
             console.log(results);
             $scope.searchResult = 'There was an error loading the results';
         };
-        $scope.showConfig = function(){
-            lubTmdbApiConfiguration.get().then(suc,err);
+        $scope.showConfig = function () {
+            lubTmdbApiConfiguration.get().then(suc, err);
         }
         $scope.searchMovie = function () {
             lubTmdbApiSearch.movie($scope.query).then(suc, err);
@@ -178,8 +184,7 @@
                 topRated:'top_rated'
             }
             var needsNoIdentifier = ['latest', 'upcoming', 'nowPlaying', 'popular', 'topRated'];
-            var action = '';
-            var append_to_response = [];
+            var action, append_to_response = [];
             angular.forEach($scope.movie, function (value, key) {
                 if (value && !action) {
                     action = key;

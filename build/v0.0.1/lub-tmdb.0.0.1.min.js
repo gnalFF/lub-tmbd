@@ -1,6 +1,6 @@
 /**
  * AngularJS Tmdb API
- * @version v0.0.1 - 2013-01-13
+ * @version v0.0.1 - 2013-01-14
  * @link https://github.com/gnalFF/lub-tmbd
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
