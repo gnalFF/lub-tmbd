@@ -33,7 +33,7 @@ $ npm install
 
 ```bash
 $ npm install -g testacular grunt
-
+```
 
 ### Build Files & Run Tests
 
