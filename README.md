@@ -15,6 +15,8 @@ The repository comes with the modules pre-built and compressed into the `build/`
 angular.module('myApp', ['lub-tmdb-api']).value('lubTmdbApiKey','[ENTER YOUR API KEY HERE]');
 ```
 
+To run the example provide an api key in the index.html file
+
 ## Development
 
 You do not need to build the project to use it - see above - but if you are working on it then this is what you need to know.
