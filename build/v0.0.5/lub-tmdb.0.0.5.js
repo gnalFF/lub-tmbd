@@ -1,6 +1,6 @@
 /**
  * AngularJS Tmdb API
- * @version v0.0.4 - 2013-01-15
+ * @version v0.0.5 - 2013-01-15
  * @link https://github.com/gnalFF/lub-tmbd
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
@@ -28,6 +28,17 @@ angular.module('lub-tmdb-api-configuration', ['lub-tmdb-config','lub-tmdb-http']
         };
     });
 
+angular.module('lub-tmdb-api-change', ['lub-tmdb-http','lub-tmdb-config'])
+    .factory('lubTmdbApiChange', function (lubTmdbHTTP,lubTmdbBaseURL) {
+        return {
+            movie: function(params,doCache){
+                return lubTmdbHTTP(lubTmdbBaseURL+"movie/changes");
+            },
+            person: function(params,doCache){
+                return lubTmdbHTTP(lubTmdbBaseURL+"person/changes");
+            }
+        };
+    });
 /**
  * Created with JetBrains WebStorm.
  * User: gnalFF
@@ -46,6 +57,28 @@ angular.module('lub-tmdb-api-collection', ['lub-tmdb-config','lub-tmdb-http'])
             }
         };
     });
+angular.module('lub-tmdb-api-company', ['lub-tmdb-config','lub-tmdb-http'])
+    .factory('lubTmdbApiCompany', function (lubTmdbBaseURL,lubTmdbHTTP) {
+        return {
+            company: function(companyId,params,doCache){
+                return lubTmdbHTTP(lubTmdbBaseURL+"company/"+companyId);
+            },
+            movies: function(companyId,params,doCache){
+                return lubTmdbHTTP(lubTmdbBaseURL+"company/"+companyId+"/movies");
+            }
+        };
+    });
+angular.module('lub-tmdb-api-genre', ['lub-tmdb-config', 'lub-tmdb-http'])
+    .factory('lubTmdbApiGenre', function (lubTmdbBaseURL, lubTmdbHTTP) {
+        return {
+            list:function (params,doCache) {
+                return lubTmdbHTTP(lubTmdbBaseURL + "genre/list",params,doCache);
+            },
+            movies:function (genreId,params,doCache) {
+                return lubTmdbHTTP(lubTmdbBaseURL + "genre/"+genreId+"/movies",params,doCache);
+            }
+        };
+    });
 angular.module('lub-tmdb-http', ['lub-tmdb-config'])
     .factory('lubTmdbHTTP', function ($http, $q, lubTmdbApiKey) {
         return function (url, options, doCache) {
@@ -60,6 +93,17 @@ angular.module('lub-tmdb-http', ['lub-tmdb-config'])
                 }, options),
                 cache:doCache
             });
+        };
+    });
+angular.module('lub-tmdb-api-keyword', ['lub-tmdb-config','lub-tmdb-http'])
+    .factory('lubTmdbApiKeyword', function (lubTmdbBaseURL,lubTmdbHTTP) {
+        return {
+            keyword:function (keywordId, params, doCache) {
+                return lubTmdbHTTP(lubTmdbBaseURL+'keyword/'+keywordId,params,doCache);
+            },
+            movies:function (keywordId, params, doCache) {
+                return lubTmdbHTTP(lubTmdbBaseURL+'keyword/'+keywordId+"/movies",params,doCache);
+            }
         };
     });
 angular.module('lub-tmdb-api-list', ['lub-tmdb-http'])
@@ -198,4 +242,13 @@ angular.module('lub-tmdb-api-search', ['lub-tmdb-config','lub-tmdb-http'])
             }
         };
     });
-angular.module('lub-tmdb-api',['lub-tmdb-api-movie','lub-tmdb-api-search','lub-tmdb-api-configuration','lub-tmdb-api-collection','lub-tmdb-api-people','lub-tmdb-api-list']);
+angular.module('lub-tmdb-api',['lub-tmdb-api-movie',
+    'lub-tmdb-api-search',
+    'lub-tmdb-api-configuration',
+    'lub-tmdb-api-collection',
+    'lub-tmdb-api-people',
+    'lub-tmdb-api-list',
+    'lub-tmdb-api-change',
+    'lub-tmdb-api-keyword',
+    'lub-tmdb-api-genre',
+    'lub-tmdb-api-company']);
