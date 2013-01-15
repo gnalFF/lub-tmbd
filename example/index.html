@@ -145,14 +145,13 @@
 <script src="../build/v0.0.1/lub-tmdb.0.0.1.js"></script>
 <script>
     var app = angular.module('lub-tmdb-example', ['lub-tmdb-api'])
-            .value('lubTmdbApiKey', '[!!ENTER YOUR API KEY HERE!!!]')
+            .value('lubTmdbApiKey', '')//'4817ea3961098299634ff3c367e44551')
     app.controller('SearchCtrl', function ($scope, lubTmdbApiSearch, lubTmdbApiMovie, lubTmdbApiConfiguration) {
         var suc = function (results) {
             $scope.searchResult = angular.toJson(results, true);
         };
         var err = function (results) {
-            console.log(results);
-            $scope.searchResult = 'There was an error loading the results';
+            $scope.searchResult = results;
         };
         $scope.showConfig = function () {
             lubTmdbApiConfiguration.get().then(suc, err);

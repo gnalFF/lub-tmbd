@@ -10,7 +10,7 @@
 
             var success;
             lubTmdbApiSearch.movie('Terminator').then(function (result) {
-                success = result;
+                success = result.data;
             });
             $httpBackend.flush();
 
@@ -22,7 +22,7 @@
 
             var success;
             lubTmdbApiSearch.collection('Terminator').then(function (result) {
-                success = result;
+                success = result.data;
             });
             $httpBackend.flush();
 
@@ -34,7 +34,7 @@
 
             var success;
             lubTmdbApiSearch.list('Terminator').then(function (result) {
-                success = result;
+                success = result.data;
             });
             $httpBackend.flush();
 

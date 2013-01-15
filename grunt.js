@@ -36,13 +36,15 @@ module.exports = function (grunt) {
                     expect:true,
                     module:true,
                     beforeEach:true,
-                    describe: true
+                    describe: true,
+                    console: true,
+                    angular: true
                 }
             }
         }
     );
     grunt.registerTask('default', 'lint concat min')
-    grunt.registerTask('server', 'start testacular server', function () {
+    grunt.registerTask('server', 'start server', function () {
         //Mark the task as async but never call done, so the server stays up
         var done = this.async();
         testacular.server.start({ configFile: 'test/testacular.conf.js'});
