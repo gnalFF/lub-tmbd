@@ -220,7 +220,7 @@
 <script src="../build/v0.0.5/lub-tmdb.0.0.5.js"></script>
 <script>
     var app = angular.module('lub-tmdb-example', ['lub-tmdb-api'])
-            .value('lubTmdbApiKey', '4817ea3961098299634ff3c367e44551');
+            .value('lubTmdbApiKey', '');
     app.controller('SearchCtrl', function ($scope, lubTmdbApiSearch, lubTmdbApiMovie, lubTmdbApiConfiguration, lubTmdbApiCollection, lubTmdbApiPeople, lubTmdbApiList, lubTmdbApiCompany, lubTmdbApiGenre,lubTmdbApiKeyword,lubTmdbApiChange) {
         var suc = function (results) {
             $scope.searchResult = angular.toJson(results, true);
