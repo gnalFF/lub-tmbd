@@ -121,6 +121,15 @@
                 </p>
                 <button class="btn" type="submit">GET</button>
             </form>
+            <form class="form-search" ng-submit='showCollection()'>
+                <input type="text" data-ng-model="query">
+                <label>With Images<input type="checkbox" data-ng-model="withImages"></label>
+                <button class="btn" type="submit">Show Collection</button>
+            </form>
+            <form ng-submit='showCollectionImages()'>
+                <input type="text" data-ng-model="query">
+                <button class="btn" type="submit">Show Collection Images</button>
+            </form>
         </div>
         <div class="span6">
             <h1>RAW Search Results</h1>
@@ -142,11 +151,11 @@
     }
 </style>
 <script src="../test/lib/angular.1.1.1.js"></script>
-<script src="../build/v0.0.1/lub-tmdb.0.0.1.js"></script>
+<script src="../build/v0.0.2/lub-tmdb.0.0.2.js"></script>
 <script>
     var app = angular.module('lub-tmdb-example', ['lub-tmdb-api'])
-            .value('lubTmdbApiKey', '')//'4817ea3961098299634ff3c367e44551')
-    app.controller('SearchCtrl', function ($scope, lubTmdbApiSearch, lubTmdbApiMovie, lubTmdbApiConfiguration) {
+            .value('lubTmdbApiKey', '');
+    app.controller('SearchCtrl', function ($scope, lubTmdbApiSearch, lubTmdbApiMovie, lubTmdbApiConfiguration,lubTmdbApiCollection) {
         var suc = function (results) {
             $scope.searchResult = angular.toJson(results, true);
         };
@@ -173,6 +182,17 @@
         }
         $scope.searchPerson = function () {
             lubTmdbApiSearch.person($scope.query).then(suc, err);
+        }
+
+        $scope.showCollection = function(){
+            var options = {}
+            if($scope.withImages){
+                options.append_to_response = "images";
+            }
+            lubTmdbApiCollection.collection($scope.query,options,true).then(suc,err);
+        }
+        $scope.showCollectionImages = function(){
+            lubTmdbApiCollection.images($scope.query).then(suc,err);
         }
 
         $scope.movieInfos = function () {

@@ -1,10 +1,3 @@
-/**
- * Created with JetBrains WebStorm.
- * User: gnalFF
- * Date: 14.01.13
- * Time: 15:10
- * To change this template use File | Settings | File Templates.
- */
 angular.module('lub-tmdb-http', ['lub-tmdb-config'])
     .factory('lubTmdbHTTP', function ($http, $q, lubTmdbApiKey) {
         return function (url, options, doCache) {
