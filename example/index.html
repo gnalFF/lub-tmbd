@@ -22,9 +22,11 @@
     </div>
     <div class="row" ng-controller="SearchCtrl">
         <div class="span6">
+            <h1>CONFIG</h1>
             <form ng-submit='showConfig()'>
                 <button type="submit" class="btn">Show configuration</button>
             </form>
+            <h1>SEARCH</h1>
             <form class="form-search" ng-submit="searchMovie()">
                 <input type="text" ng-model="query">
                 <button class="btn" type="submit">Search Movie</button>
@@ -52,7 +54,6 @@
             <form class="form-search" ng-submit="movieInfos()">
                 <legend>Movie informations</legend>
                 <input type="text" ng-model='identifier'>
-
                 <p>
                     <label>
                         movie
@@ -121,14 +122,40 @@
                 </p>
                 <button class="btn" type="submit">GET</button>
             </form>
+            <h1>Collections</h1>
             <form class="form-search" ng-submit='showCollection()'>
-                <input type="text" data-ng-model="query">
+                <input type="text" data-ng-model="collectionQuery">
                 <label>With Images<input type="checkbox" data-ng-model="withImages"></label>
                 <button class="btn" type="submit">Show Collection</button>
             </form>
             <form ng-submit='showCollectionImages()'>
-                <input type="text" data-ng-model="query">
+                <input type="text" data-ng-model="collectionQuery">
                 <button class="btn" type="submit">Show Collection Images</button>
+            </form>
+            <h1>People</h1>
+            <form ng-submit='showPerson()'>
+                <input type="text" data-ng-model="peopleQuery">
+                <button class="btn" type="submit">Show Person</button>
+            </form>
+            <form ng-submit='showPersonImages()'>
+                <input type="text" data-ng-model="peopleQuery">
+                <button class="btn" type="submit">Show Person Images</button>
+            </form>
+            <form ng-submit='showPersonCredits()'>
+                <input type="text" data-ng-model="peopleQuery">
+                <button class="btn" type="submit">Show Person Credits</button>
+            </form>
+            <form ng-submit='showPersonChanges()'>
+                <input type="text" data-ng-model="peopleQuery">
+                <button class="btn" type="submit">Show Person Changes</button>
+            </form>
+            <form ng-submit='showPersonLatest()'>
+                <button class="btn" type="submit">Show Latest Person</button>
+            </form>
+            <h1>List</h1>
+            <form ng-submit='showList()'>
+                <input type="text" data-ng-model="listQuery">
+                <button class="btn" type="submit">Show List</button>
             </form>
         </div>
         <div class="span6">
@@ -151,11 +178,11 @@
     }
 </style>
 <script src="../test/lib/angular.1.1.1.js"></script>
-<script src="../build/v0.0.2/lub-tmdb.0.0.2.js"></script>
+<script src="../build/v0.0.4/lub-tmdb.0.0.4.js"></script>
 <script>
     var app = angular.module('lub-tmdb-example', ['lub-tmdb-api'])
             .value('lubTmdbApiKey', '');
-    app.controller('SearchCtrl', function ($scope, lubTmdbApiSearch, lubTmdbApiMovie, lubTmdbApiConfiguration,lubTmdbApiCollection) {
+    app.controller('SearchCtrl', function ($scope, lubTmdbApiSearch, lubTmdbApiMovie, lubTmdbApiConfiguration,lubTmdbApiCollection,lubTmdbApiPeople,lubTmdbApiList) {
         var suc = function (results) {
             $scope.searchResult = angular.toJson(results, true);
         };
@@ -189,11 +216,30 @@
             if($scope.withImages){
                 options.append_to_response = "images";
             }
-            lubTmdbApiCollection.collection($scope.query,options,true).then(suc,err);
+            lubTmdbApiCollection.collection($scope.collectionQuery,options,true).then(suc,err);
         }
         $scope.showCollectionImages = function(){
-            lubTmdbApiCollection.images($scope.query).then(suc,err);
+            lubTmdbApiCollection.images($scope.collectionQuery).then(suc,err);
         }
+
+        $scope.showPerson = function(){
+            lubTmdbApiPeople.person($scope.peopleQuery).then(suc,err);
+        }
+        $scope.showPersonImages = function(){
+            lubTmdbApiPeople.images($scope.peopleQuery).then(suc,err);
+        }
+        $scope.showPersonCredits = function(){
+            lubTmdbApiPeople.credits($scope.peopleQuery).then(suc,err);
+        }
+        $scope.showPersonChanges = function(){
+            lubTmdbApiPeople.changes($scope.peopleQuery).then(suc,err);
+        }
+        $scope.showPersonLatest = function(){
+            lubTmdbApiPeople.latest().then(suc,err);
+        }
+        $scope.showList = function(){
+            lubTmdbApiList.list($scope.listQuery).then(suc,err);
+        };
 
         $scope.movieInfos = function () {
             var rename = {

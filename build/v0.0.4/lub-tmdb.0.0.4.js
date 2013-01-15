@@ -1,6 +1,6 @@
 /**
  * AngularJS Tmdb API
- * @version v0.0.2 - 2013-01-15
+ * @version v0.0.4 - 2013-01-15
  * @link https://github.com/gnalFF/lub-tmbd
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
@@ -60,6 +60,14 @@ angular.module('lub-tmdb-http', ['lub-tmdb-config'])
                 }, options),
                 cache:doCache
             });
+        };
+    });
+angular.module('lub-tmdb-api-list', ['lub-tmdb-http'])
+    .factory('lubTmdbApiList', function (lubTmdbHTTP,lubTmdbBaseURL) {
+        return {
+            list: function(listId,options,doCache){
+                return lubTmdbHTTP(lubTmdbBaseURL+"list/"+listId,options,doCache);
+            }
         };
     });
 /**
@@ -137,6 +145,26 @@ angular.module("lub-tmdb-api-movie", ['lub-tmdb-config', 'lub-tmdb-http'])
              **/
         };
     });
+angular.module('lub-tmdb-api-people', ['lub-tmdb-http'])
+    .factory('lubTmdbApiPeople', function (lubTmdbHTTP,lubTmdbBaseURL) {
+        return {
+            person: function(personId,options,doCache){
+                return lubTmdbHTTP(lubTmdbBaseURL+"person/"+personId,options,doCache);
+            },
+            credits: function(personId,options,doCache){
+                return lubTmdbHTTP(lubTmdbBaseURL+"person/"+personId+"/credits",options,doCache);
+            },
+            images: function(personId,options,doCache){
+                return lubTmdbHTTP(lubTmdbBaseURL+"person/"+personId+"/images",options,doCache);
+            },
+            changes: function(personId,options,doCache){
+                return lubTmdbHTTP(lubTmdbBaseURL+"person/"+personId+"/changes",options,doCache);
+            },
+            latest: function(options,doCache){
+                return lubTmdbHTTP(lubTmdbBaseURL+"person/latest",options,doCache);
+            }
+        };
+    });
 /**
  * Module dealing with search related stuff.
  * http://docs.themoviedb.apiary.io/#search
@@ -170,4 +198,4 @@ angular.module('lub-tmdb-api-search', ['lub-tmdb-config','lub-tmdb-http'])
             }
         };
     });
-angular.module('lub-tmdb-api',['lub-tmdb-api-movie','lub-tmdb-api-search','lub-tmdb-api-configuration','lub-tmdb-api-collection']);
+angular.module('lub-tmdb-api',['lub-tmdb-api-movie','lub-tmdb-api-search','lub-tmdb-api-configuration','lub-tmdb-api-collection','lub-tmdb-api-people','lub-tmdb-api-list']);

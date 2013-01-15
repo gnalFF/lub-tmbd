@@ -1,1 +1,1 @@
-angular.module('lub-tmdb-api',['lub-tmdb-api-movie','lub-tmdb-api-search','lub-tmdb-api-configuration','lub-tmdb-api-collection']);
+angular.module('lub-tmdb-api',['lub-tmdb-api-movie','lub-tmdb-api-search','lub-tmdb-api-configuration','lub-tmdb-api-collection','lub-tmdb-api-people','lub-tmdb-api-list']);
