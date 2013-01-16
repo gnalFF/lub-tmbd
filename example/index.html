@@ -24,32 +24,32 @@
         <div class="span6">
             <h1>CONFIG</h1>
 
-            <form ng-submit='showConfig()'>
+            <form ng-submit='exec("configuration","get")'>
                 <button type="submit" class="btn">Show configuration</button>
             </form>
             <h1>SEARCH</h1>
 
-            <form class="form-search" ng-submit="searchMovie()">
+            <form class="form-search" ng-submit='exec("search","movie",query)'>
                 <input type="text" ng-model="query">
                 <button class="btn" type="submit">Search Movie</button>
             </form>
-            <form class="form-search" ng-submit="searchCollection()">
+            <form class="form-search" ng-submit='exec("search","collection",query)'>
                 <input type="text" ng-model="query">
                 <button class="btn" type="submit">Search Collection</button>
             </form>
-            <form class="form-search" ng-submit="searchCompany()">
+            <form class="form-search" ng-submit='exec("search","company",query)'>
                 <input type="text" ng-model="query">
                 <button class="btn" type="submit">Search company</button>
             </form>
-            <form class="form-search" ng-submit="searchPerson()">
+            <form class="form-search" ng-submit='exec("search","person",query)'>
                 <input type="text" ng-model="query">
                 <button class="btn" type="submit">Search Person</button>
             </form>
-            <form class="form-search" ng-submit="searchList()">
+            <form class="form-search" ng-submit='exec("search","list",query)'>
                 <input type="text" ng-model="query">
                 <button class="btn" type="submit">Search List</button>
             </form>
-            <form class="form-search" ng-submit="searchKeyword()">
+            <form class="form-search" ng-submit='exec("search","keyword",query)'>
                 <input type="text" ng-model="query">
                 <button class="btn" type="submit">Search Keyword</button>
             </form>
@@ -127,73 +127,72 @@
             </form>
             <h1>Collections</h1>
 
-            <form class="form-search" ng-submit='showCollection()'>
+            <form class="form-search" ng-submit='exec("collection","collection",collectionQuery)'>
                 <input type="text" data-ng-model="collectionQuery">
-                <label>With Images<input type="checkbox" data-ng-model="withImages"></label>
                 <button class="btn" type="submit">Show Collection</button>
             </form>
-            <form ng-submit='showCollectionImages()'>
+            <form ng-submit='exec("collection","images",collectionQuery)'>
                 <input type="text" data-ng-model="collectionQuery">
                 <button class="btn" type="submit">Show Collection Images</button>
             </form>
             <h1>People</h1>
 
-            <form ng-submit='showPerson()'>
+            <form ng-submit='exec("people","person",peopleQuery)'>
                 <input type="text" data-ng-model="peopleQuery">
                 <button class="btn" type="submit">Show Person</button>
             </form>
-            <form ng-submit='showPersonImages()'>
+            <form ng-submit='exec("people","images",peopleQuery)'>
                 <input type="text" data-ng-model="peopleQuery">
                 <button class="btn" type="submit">Show Person Images</button>
             </form>
-            <form ng-submit='showPersonCredits()'>
+            <form ng-submit='exec("people","credits",peopleQuery)'>
                 <input type="text" data-ng-model="peopleQuery">
                 <button class="btn" type="submit">Show Person Credits</button>
             </form>
-            <form ng-submit='showPersonChanges()'>
+            <form ng-submit='exec("people","changes",peopleQuery)'>
                 <input type="text" data-ng-model="peopleQuery">
                 <button class="btn" type="submit">Show Person Changes</button>
             </form>
-            <form ng-submit='showPersonLatest()'>
+            <form ng-submit='exec("people","latest")'>
                 <button class="btn" type="submit">Show Latest Person</button>
             </form>
             <h1>List</h1>
 
-            <form ng-submit='showList()'>
+            <form ng-submit='exec("list","list",listQuery)'>
                 <input type="text" data-ng-model="listQuery">
                 <button class="btn" type="submit">Show List</button>
             </form>
             <h1>Companies</h1>
-            <form ng-submit='showCompany()'>
+            <form ng-submit='exec("company","company",companyQuery)'>
                 <input type="text" data-ng-model="companyQuery">
                 <button class="btn" type="submit">Show Company Details</button>
             </form>
-            <form ng-submit='showCompanyMovies()'>
+            <form ng-submit='exec("company","movies",companyQuery)'>
                 <input type="text" data-ng-model="companyQuery">
                 <button class="btn" type="submit">Show Movies of Company</button>
             </form>
             <h1>Genres</h1>
-            <form ng-submit='showGenres()'>
+            <form ng-submit='exec("genre","list")'>
                 <button class="btn" type="submit">Show Genre List</button>
             </form>
-            <form ng-submit='showGenreMovies()'>
+            <form ng-submit='exec("genre","movies",genreQuery)'>
                 <input type="text" data-ng-model="genreQuery">
                 <button class="btn" type="submit">Show Movies With Genre</button>
             </form>
             <h1>Keywords</h1>
-            <form ng-submit='showKeyword()'>
+            <form ng-submit='exec("keyword","keyword",keywordQuery)'>
                 <input type="text" data-ng-model="keywordQuery">
                 <button class="btn" type="submit">Show Keyword Details</button>
             </form>
-            <form ng-submit='showKeywordMovies()'>
+            <form ng-submit='exec("keyword","movies",keywordQuery)'>
                 <input type="text" data-ng-model="keywordQuery">
                 <button class="btn" type="submit">Show Movies with keyword</button>
             </form>
             <h1>Changes</h1>
-            <form ng-submit='showMovieChanges()'>
+            <form ng-submit='exec("change","movie")'>
                 <button class="btn" type="submit">Show changes on movies</button>
             </form>
-            <form ng-submit='showPersonChanges()'>
+            <form ng-submit='exec("change","person")'>
                 <button class="btn" type="submit">Show Changes on persons</button>
             </form>
         </div>
@@ -217,92 +216,20 @@
     }
 </style>
 <script src="../test/lib/angular.1.1.1.js"></script>
-<script src="../build/v0.0.5/lub-tmdb.0.0.5.js"></script>
+<script src="../build/v0.0.6/lub-tmdb.0.0.6.js"></script>
 <script>
     var app = angular.module('lub-tmdb-example', ['lub-tmdb-api'])
-            .value('lubTmdbApiKey', '');
-    app.controller('SearchCtrl', function ($scope, lubTmdbApiSearch, lubTmdbApiMovie, lubTmdbApiConfiguration, lubTmdbApiCollection, lubTmdbApiPeople, lubTmdbApiList, lubTmdbApiCompany, lubTmdbApiGenre,lubTmdbApiKeyword,lubTmdbApiChange) {
+            .value('lubTmdbApiKey', '4817ea3961098299634ff3c367e44551');
+    app.controller('SearchCtrl', function ($scope, lubTmdbApi) {
         var suc = function (results) {
             $scope.searchResult = angular.toJson(results, true);
         };
         var err = function (results) {
             $scope.searchResult = results;
         };
-        $scope.showMovieChanges = function(){
-            lubTmdbApiChange.movie().then(suc,err);
+        $scope.exec = function(type,method,query){
+            lubTmdbApi[type][method](query).then(suc,err);
         }
-        $scope.showPersonChanges = function(){
-            lubTmdbApiChange.person().then(suc,err);
-        }
-        $scope.showKeyword = function(){
-            lubTmdbApiKeyword.keyword($scope.keywordQuery).then(suc,err);
-        }
-        $scope.showKeywordMovies = function(){
-            lubTmdbApiKeyword.movies($scope.keywordQuery).then(suc,err);
-        }
-        $scope.showGenres = function () {
-            lubTmdbApiGenre.list().then(suc, err);
-        }
-        $scope.showGenreMovies = function () {
-            lubTmdbApiGenre.movies($scope.genreQuery).then(suc, err);
-        }
-        $scope.showCompany = function () {
-            lubTmdbApiCompany.company($scope.companyQuery).then(suc, err);
-        }
-        $scope.showCompanyMovies = function () {
-            lubTmdbApiCompany.movies($scope.companyQuery).then(suc, err);
-        }
-        $scope.showConfig = function () {
-            lubTmdbApiConfiguration.get().then(suc, err);
-        }
-        $scope.searchMovie = function () {
-            lubTmdbApiSearch.movie($scope.query).then(suc, err);
-        }
-        $scope.searchCollection = function () {
-            lubTmdbApiSearch.collection($scope.query).then(suc, err);
-        }
-        $scope.searchList = function () {
-            lubTmdbApiSearch.list($scope.query).then(suc, err);
-        }
-        $scope.searchCompany = function () {
-            lubTmdbApiSearch.company($scope.query).then(suc, err);
-        }
-        $scope.searchKeyword = function () {
-            lubTmdbApiSearch.keyword($scope.query).then(suc, err);
-        }
-        $scope.searchPerson = function () {
-            lubTmdbApiSearch.person($scope.query).then(suc, err);
-        }
-
-        $scope.showCollection = function () {
-            var options = {}
-            if ($scope.withImages) {
-                options.append_to_response = "images";
-            }
-            lubTmdbApiCollection.collection($scope.collectionQuery, options, true).then(suc, err);
-        }
-        $scope.showCollectionImages = function () {
-            lubTmdbApiCollection.images($scope.collectionQuery).then(suc, err);
-        }
-
-        $scope.showPerson = function () {
-            lubTmdbApiPeople.person($scope.peopleQuery).then(suc, err);
-        }
-        $scope.showPersonImages = function () {
-            lubTmdbApiPeople.images($scope.peopleQuery).then(suc, err);
-        }
-        $scope.showPersonCredits = function () {
-            lubTmdbApiPeople.credits($scope.peopleQuery).then(suc, err);
-        }
-        $scope.showPersonChanges = function () {
-            lubTmdbApiPeople.changes($scope.peopleQuery).then(suc, err);
-        }
-        $scope.showPersonLatest = function () {
-            lubTmdbApiPeople.latest().then(suc, err);
-        }
-        $scope.showList = function () {
-            lubTmdbApiList.list($scope.listQuery).then(suc, err);
-        };
 
         $scope.movieInfos = function () {
             var rename = {
@@ -328,9 +255,9 @@
                 action = 'movie';
             }
             if (needsNoIdentifier.indexOf(action) >= 0) {
-                lubTmdbApiMovie[action]({append_to_response:append_to_response.join(',')}).then(suc, err);
+                lubTmdbApi.movie[action]({append_to_response:append_to_response.join(',')}).then(suc, err);
             } else {
-                lubTmdbApiMovie[action]($scope.identifier, {append_to_response:append_to_response.join(',')}).then(suc, err);
+                lubTmdbApi.movie[action]($scope.identifier, {append_to_response:append_to_response.join(',')}).then(suc, err);
             }
         }
     });
