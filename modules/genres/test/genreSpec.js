@@ -13,7 +13,9 @@
         it('should make a jsonp request to get movies with genre', inject(function (lubTmdbBaseURL, $httpBackend, lubTmdbApiGenre) {
             $httpBackend.expectJSONP(lubTmdbBaseURL + "genre/3/movies?api_key=&callback=JSON_CALLBACK").respond("hello");
             var result;
-            lubTmdbApiGenre.movies(3).then(function (res) {
+            lubTmdbApiGenre.movies({
+                query: 3
+            }).then(function (res) {
                 result = res;
             });
             $httpBackend.flush();

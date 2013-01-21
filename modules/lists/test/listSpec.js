@@ -5,7 +5,9 @@
         it('should make a jsonp request to get lists by id',inject(function(lubTmdbApiList,$httpBackend,lubTmdbBaseURL){
             $httpBackend.expectJSONP(lubTmdbBaseURL+"list/3?api_key=&callback=JSON_CALLBACK").respond('list');
             var result;
-            lubTmdbApiList.list(3).then(function(res){
+            lubTmdbApiList.list({
+                query: 3
+            }).then(function(res){
                 result = res;
             });
             $httpBackend.flush();

@@ -4,7 +4,9 @@
         it('should make a jsonp request to get companies by id',inject(function(lubTmdbBaseURL,$httpBackend,lubTmdbApiCompany){
             $httpBackend.expectJSONP(lubTmdbBaseURL+"company/3?api_key=&callback=JSON_CALLBACK").respond("hello");
             var result;
-            lubTmdbApiCompany.company(3).then(function(res){
+            lubTmdbApiCompany.company({
+                query: 3
+            }).then(function(res){
                 result = res;
             });
             $httpBackend.flush();
@@ -13,7 +15,9 @@
         it('should make a jsonp request to get movies of companies',inject(function(lubTmdbBaseURL,$httpBackend,lubTmdbApiCompany){
             $httpBackend.expectJSONP(lubTmdbBaseURL+"company/3/movies?api_key=&callback=JSON_CALLBACK").respond("hello");
             var result;
-            lubTmdbApiCompany.movies(3).then(function(res){
+            lubTmdbApiCompany.movies({
+                query: 3
+            }).then(function(res){
                 result = res;
             });
             $httpBackend.flush();

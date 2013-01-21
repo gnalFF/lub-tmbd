@@ -1,20 +1,30 @@
 angular.module('lub-tmdb-api-people', ['lub-tmdb-http'])
-    .factory('lubTmdbApiPeople', function (lubTmdbHTTP,lubTmdbBaseURL) {
+    .factory('lubTmdbApiPeople', function (lubTmdbHTTP) {
         return {
-            person: function(personId,options,doCache){
-                return lubTmdbHTTP(lubTmdbBaseURL+"person/"+personId,options,doCache);
+            person: function(options){
+                return lubTmdbHTTP(angular.extend({},options,{
+                    url : 'person/'+options.query
+                }));
             },
-            credits: function(personId,options,doCache){
-                return lubTmdbHTTP(lubTmdbBaseURL+"person/"+personId+"/credits",options,doCache);
+            credits: function(options){
+                return lubTmdbHTTP(angular.extend({},options,{
+                    url : 'person/'+options.query+"/credits"
+                }));
             },
-            images: function(personId,options,doCache){
-                return lubTmdbHTTP(lubTmdbBaseURL+"person/"+personId+"/images",options,doCache);
+            images: function(options){
+                return lubTmdbHTTP(angular.extend({},options,{
+                    url : 'person/'+options.query+"/images"
+                }));
             },
-            changes: function(personId,options,doCache){
-                return lubTmdbHTTP(lubTmdbBaseURL+"person/"+personId+"/changes",options,doCache);
+            changes: function(options){
+                return lubTmdbHTTP(angular.extend({},options,{
+                    url : 'person/'+options.query+"/changes"
+                }));
             },
-            latest: function(options,doCache){
-                return lubTmdbHTTP(lubTmdbBaseURL+"person/latest",options,doCache);
+            latest: function(options){
+                return lubTmdbHTTP(angular.extend({},options,{
+                    url : 'person/latest'
+                }));
             }
         };
     });

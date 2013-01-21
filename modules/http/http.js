@@ -1,16 +1,14 @@
 angular.module('lub-tmdb-http', ['lub-tmdb-config'])
-    .factory('lubTmdbHTTP', function ($http, $q, lubTmdbApiKey) {
-        return function (url, options, doCache) {
-            var opts = options || {};
-            if(angular.isUndefined(doCache)){
-                doCache = true;
-            }
+    .factory('lubTmdbHTTP', function ($http, $q, lubTmdbApiKey, lubTmdbBaseURL) {
+        return function (options) {
+            var url = lubTmdbBaseURL + options.url;
+            var params = angular.extend({}, options.params, {
+                api_key: lubTmdbApiKey,
+                callback: 'JSON_CALLBACK'
+            });
             return $http.jsonp(url, {
-                params:angular.extend({
-                    api_key:lubTmdbApiKey,
-                    callback:'JSON_CALLBACK'
-                }, options),
-                cache:doCache
+                params:params,
+                cache:angular.isDefined(options.cache) ? options.cache : true
             });
         };
     });

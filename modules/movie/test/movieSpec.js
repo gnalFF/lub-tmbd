@@ -8,7 +8,9 @@
 
             $httpBackend.expectJSONP(lubTmdbBaseURL+ "movie/3?api_key=" + lubTmdbApiKey+'&callback=JSON_CALLBACK').respond(200, {daMovie:1});
             var success;
-            lubTmdbApiMovie.movie(3).then(function (movie,status,header,config) {
+            lubTmdbApiMovie.movie({
+                query: 3
+            }).then(function (movie,status,header,config) {
                 success = movie.data;
             });
             $httpBackend.flush();
@@ -18,7 +20,9 @@
 
             $httpBackend.expectJSONP(lubTmdbBaseURL + "movie/3/alternative_titles?api_key=" + lubTmdbApiKey+'&callback=JSON_CALLBACK').respond(200, {daMovie:1});
             var success;
-            lubTmdbApiMovie.alternativeTitles(3).then(function (movie) {
+            lubTmdbApiMovie.alternativeTitles({
+                query: 3
+            }).then(function (movie) {
                 success = movie.data;
             });
             $httpBackend.flush();
@@ -29,8 +33,20 @@
             $httpBackend.expectJSONP(lubTmdbBaseURL + "movie/popular?api_key=" + lubTmdbApiKey+'&callback=JSON_CALLBACK').respond(200, {daMovie:1});
             var success;
             lubTmdbApiMovie.popular().then(function (movie) {
-                success = movie.data;
-            });
+                    success = movie.data;
+                });
+            $httpBackend.flush();
+            expect(success.daMovie).toBe(1);
+        }));
+        it('should make a jsonp request to get upcoming movies and ignore the query', inject(function (lubTmdbApiMovie, lubTmdbBaseURL, lubTmdbApiKey, $httpBackend) {
+
+            $httpBackend.expectJSONP(lubTmdbBaseURL + "movie/popular?api_key=" + lubTmdbApiKey+'&callback=JSON_CALLBACK').respond(200, {daMovie:1});
+            var success;
+            lubTmdbApiMovie.popular({
+                query : 3
+            }).then(function (movie) {
+                    success = movie.data;
+                });
             $httpBackend.flush();
             expect(success.daMovie).toBe(1);
         }));

@@ -216,7 +216,7 @@
     }
 </style>
 <script src="../test/lib/angular.1.1.1.js"></script>
-<script src="../build/v0.0.6/lub-tmdb.0.0.6.js"></script>
+<script src="../build/v0.0.7/lub-tmdb.0.0.7.js"></script>
 <script>
     var app = angular.module('lub-tmdb-example', ['lub-tmdb-api'])
             .value('lubTmdbApiKey', '');
@@ -228,7 +228,9 @@
             $scope.searchResult = results;
         };
         $scope.exec = function(type,method,query){
-            lubTmdbApi[type][method](query).then(suc,err);
+            lubTmdbApi[type][method]({
+                query: query
+            }).then(suc,err);
         }
 
         $scope.movieInfos = function () {
@@ -255,9 +257,14 @@
                 action = 'movie';
             }
             if (needsNoIdentifier.indexOf(action) >= 0) {
-                lubTmdbApi.movie[action]({append_to_response:append_to_response.join(',')}).then(suc, err);
+                lubTmdbApi.movie[action]({params: {
+                    append_to_response:append_to_response.join(',')
+                }}).then(suc, err);
             } else {
-                lubTmdbApi.movie[action]($scope.identifier, {append_to_response:append_to_response.join(',')}).then(suc, err);
+                lubTmdbApi.movie[action]({
+                    query: $scope.identifier,
+                    params: {append_to_response:append_to_response.join(',')}
+                }).then(suc, err);
             }
         }
     });

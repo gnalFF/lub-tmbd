@@ -3,67 +3,73 @@
  * http://docs.themoviedb.apiary.io/#movies
  */
 angular.module("lub-tmdb-api-movie", ['lub-tmdb-config', 'lub-tmdb-http'])
-    .factory('lubTmdbApiMovie', function (lubTmdbBaseURL, $q, lubTmdbHTTP) {
-        var get = function (movieId, type, options, doCache) {
+    .factory('lubTmdbApiMovie', function ($q, lubTmdbHTTP) {
+        var noQuery = ['latest', 'upcoming', 'now_playing', 'popular', 'top_rated'];
+        var get = function (options, type) {
+            var opts = options || {};
             var action = type === '' ? '' : ('/' + type);
-            if (movieId === '') {
-                if (['latest', 'upcoming', 'now_playing', 'popular', 'top_rated'].indexOf(type) < 0) {
+            if(noQuery.indexOf(type) >=0){
+                delete opts.query;
+            }
+            if (!opts.query) {
+                if (noQuery.indexOf(type) < 0) {
                     return $q.reject();
                 }
             } else {
-                action = '/' + movieId + action;
+                action = '/' + opts.query + action;
             }
-            var url = lubTmdbBaseURL + 'movie' + action;
-            return lubTmdbHTTP(url, options, doCache);
+            return lubTmdbHTTP(angular.extend({},opts,{
+                url : 'movie'+action
+            }));
         };
         return {
-            movie:function (movieId, options, doCache) {
-                return get(movieId, '', options);
+            movie:function (options) {
+                return get(options, '');
             },
-            alternativeTitles:function (movieId, options, doCache) {
-                return get(movieId, 'alternative_titles', options, doCache);
+            alternativeTitles:function (options) {
+                return get(options, 'alternative_titles');
             },
-            casts:function (movieId, options, doCache) {
-                return get(movieId, 'casts', options, doCache);
+            casts:function (options) {
+                return get(options, 'casts');
             },
-            images:function (movieId, options, doCache) {
-                return get(movieId, 'images', options, doCache);
+            images:function (options) {
+                return get(options, 'images');
             },
-            keywords:function (movieId, options, doCache) {
-                return get(movieId, 'keywords', options, doCache);
+            keywords:function (options) {
+                return get(options, 'keywords');
             },
-            releases:function (movieId, options, doCache) {
-                return get(movieId, 'releases', options, doCache);
+            releases:function (options) {
+                return get(options, 'releases');
             },
-            trailers:function (movieId, options, doCache) {
-                return get(movieId, 'trailers', options, doCache);
+            trailers:function (options) {
+                return get(options, 'trailers');
             },
-            translations:function (movieId, options, doCache) {
-                return get(movieId, 'translations', options, doCache);
+            translations:function (options) {
+                return get(options, 'translations');
             },
-            similarMovies:function (movieId, options, doCache) {
-                return get(movieId, 'similar_movies', options, doCache);
+            similarMovies:function (options) {
+                return get(options, 'similar_movies');
             },
-            lists:function (movieId, options, doCache) {
-                return get(movieId, 'lists', options, doCache);
+            lists:function (options) {
+                return get(options, 'lists');
             },
-            changes:function (movieId, options, doCache) {
-                return get(movieId, 'changes', options, doCache);
+            changes:function (options) {
+                return get(options, 'changes');
             },
-            latest:function (options, doCache) {
-                return get('', 'keywords', options, doCache);
+            latest:function (options) {
+                return get(options, 'keywords');
             },
-            upcoming:function (options, doCache) {
-                return get('', 'upcoming', options, doCache);
+            upcoming:function (options) {
+                return get(options, 'upcoming');
             },
-            nowPlaying:function (options, doCache) {
-                return get('', 'now_playing', options, doCache);
+            nowPlaying:function (options) {
+                return get(options, 'now_playing');
             },
-            popular:function (options, doCache) {
-                return get('', 'popular', options, doCache);
+            popular:function (options) {
+                return get(options, 'popular');
             },
-            topRated:function (options, doCache) {
-                return get('', 'top_rated', options, doCache);
+            topRated:function (options) {
+                return get(options, 'top_rated');
             }
             /**
              * This is a post method -> implement later

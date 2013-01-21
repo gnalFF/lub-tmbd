@@ -1,11 +1,15 @@
-angular.module('lub-tmdb-api-change', ['lub-tmdb-http','lub-tmdb-config'])
-    .factory('lubTmdbApiChange', function (lubTmdbHTTP,lubTmdbBaseURL) {
+angular.module('lub-tmdb-api-change', ['lub-tmdb-http', 'lub-tmdb-config'])
+    .factory('lubTmdbApiChange', function (lubTmdbHTTP) {
         return {
-            movie: function(params,doCache){
-                return lubTmdbHTTP(lubTmdbBaseURL+"movie/changes");
+            movie:function (options) {
+                return lubTmdbHTTP(angular.extend({}, options, {
+                    url:"movie/changes"
+                }));
             },
-            person: function(params,doCache){
-                return lubTmdbHTTP(lubTmdbBaseURL+"person/changes");
+            person:function (options) {
+                return lubTmdbHTTP(angular.extend({}, options, {
+                    url:"person/changes"
+                }));
             }
         };
     });

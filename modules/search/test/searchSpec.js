@@ -9,7 +9,9 @@
             $httpBackend.expectJSONP(lubTmdbBaseURL + "search/movie?api_key=" + lubTmdbApiKey + '&callback=JSON_CALLBACK&query=Terminator').respond(200, {results:1});
 
             var success;
-            lubTmdbApiSearch.movie('Terminator').then(function (result) {
+            lubTmdbApiSearch.movie({
+                query: 'Terminator'
+            }).then(function (result) {
                 success = result.data;
             });
             $httpBackend.flush();
@@ -21,7 +23,9 @@
             $httpBackend.expectJSONP(lubTmdbBaseURL+ "search/collection?api_key=" + lubTmdbApiKey + '&callback=JSON_CALLBACK&query=Terminator').respond(200, {results:1});
 
             var success;
-            lubTmdbApiSearch.collection('Terminator').then(function (result) {
+            lubTmdbApiSearch.collection({
+                query: 'Terminator'
+            }).then(function (result) {
                 success = result.data;
             });
             $httpBackend.flush();
@@ -33,7 +37,9 @@
             $httpBackend.expectJSONP(lubTmdbBaseURL+ "search/list?api_key=" + lubTmdbApiKey + '&callback=JSON_CALLBACK&query=Terminator').respond(200, {results:1});
 
             var success;
-            lubTmdbApiSearch.list('Terminator').then(function (result) {
+            lubTmdbApiSearch.list({
+                query: 'Terminator'
+            }).then(function (result) {
                 success = result.data;
             });
             $httpBackend.flush();

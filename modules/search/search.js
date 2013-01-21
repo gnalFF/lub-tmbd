@@ -3,31 +3,34 @@
  * http://docs.themoviedb.apiary.io/#search
  */
 angular.module('lub-tmdb-api-search', ['lub-tmdb-config','lub-tmdb-http'])
-    .factory('lubTmdbApiSearch', function (lubTmdbBaseURL,lubTmdbHTTP) {
-        var get = function (query, type, options,doCache) {
-            options = options || {};
-            options.query = query;
-            var url = lubTmdbBaseURL+ 'search/' + type;
-            return lubTmdbHTTP(url,options,doCache);
+    .factory('lubTmdbApiSearch', function (lubTmdbHTTP) {
+        var get = function (type, options) {
+            var opts = angular.extend({},options,{
+                params: {}
+            });
+            opts.params.query = opts.query;
+            return lubTmdbHTTP(angular.extend({},opts,{
+                url : 'search/' + type
+            }));
         };
         return {
-            movie:function (query, options) {
-                return get(query, 'movie', options);
+            movie:function (options) {
+                return get('movie', options);
             },
-            collection:function (query, options) {
-                return get(query, 'collection', options);
+            collection:function (options) {
+                return get('collection', options);
             },
-            person:function (query, options) {
-                return get(query, 'person', options);
+            person:function (options) {
+                return get('person', options);
             },
-            list:function (query, options) {
-                return get(query, 'list', options);
+            list:function (options) {
+                return get('list', options);
             },
-            company:function (query, options) {
-                return get(query, 'company', options);
+            company:function (options) {
+                return get('company', options);
             },
-            keyword:function (query, options) {
-                return get(query, 'keyword', options);
+            keyword:function (options) {
+                return get('keyword', options);
             }
         };
     });

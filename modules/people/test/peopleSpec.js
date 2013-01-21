@@ -5,7 +5,9 @@
         it('should make a jsonp request to get person by id',inject(function(lubTmdbApiPeople,$httpBackend,lubTmdbBaseURL){
             $httpBackend.expectJSONP(lubTmdbBaseURL+"person/4?api_key=&callback=JSON_CALLBACK").respond(200,'BradPitt');
             var result;
-            lubTmdbApiPeople.person(4).then(function(res){
+            lubTmdbApiPeople.person({
+                query: 4
+            }).then(function(res){
                 result = res;
             });
             $httpBackend.flush();
@@ -14,7 +16,9 @@
         it('should make a jsonp request to get person credits by id',inject(function(lubTmdbApiPeople,$httpBackend,lubTmdbBaseURL){
             $httpBackend.expectJSONP(lubTmdbBaseURL+"person/4/credits?api_key=&callback=JSON_CALLBACK").respond(200,'BradPitt');
             var result;
-            lubTmdbApiPeople.credits(4).then(function(res){
+            lubTmdbApiPeople.credits({
+                query: 4
+            }).then(function(res){
                 result = res;
             });
             $httpBackend.flush();
@@ -23,7 +27,9 @@
         it('should make a jsonp request to get person images by id',inject(function(lubTmdbApiPeople,$httpBackend,lubTmdbBaseURL){
             $httpBackend.expectJSONP(lubTmdbBaseURL+"person/4/images?api_key=&callback=JSON_CALLBACK").respond(200,'BradPitt');
             var result;
-            lubTmdbApiPeople.images(4).then(function(res){
+            lubTmdbApiPeople.images({
+                query: 4
+            }).then(function(res){
                 result = res;
             });
             $httpBackend.flush();
@@ -32,7 +38,9 @@
         it('should make a jsonp request to get person changes by id',inject(function(lubTmdbApiPeople,$httpBackend,lubTmdbBaseURL){
             $httpBackend.expectJSONP(lubTmdbBaseURL+"person/4/changes?api_key=&callback=JSON_CALLBACK").respond(200,'BradPitt');
             var result;
-            lubTmdbApiPeople.changes(4).then(function(res){
+            lubTmdbApiPeople.changes({
+                query: 4
+            }).then(function(res){
                 result = res;
             });
             $httpBackend.flush();

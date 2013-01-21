@@ -5,14 +5,18 @@
  * Time: 10:32
  * To change this template use File | Settings | File Templates.
  */
-angular.module('lub-tmdb-api-collection', ['lub-tmdb-config','lub-tmdb-http'])
-    .factory('lubTmdbApiCollection', function (lubTmdbBaseURL,lubTmdbHTTP) {
+angular.module('lub-tmdb-api-collection', ['lub-tmdb-config', 'lub-tmdb-http'])
+    .factory('lubTmdbApiCollection', function (lubTmdbHTTP) {
         return {
-            collection: function(collectionId,options,doCache){
-                return lubTmdbHTTP(lubTmdbBaseURL+"collection/"+collectionId,options,doCache);
+            collection:function (options) {
+                return lubTmdbHTTP(angular.extend({}, options, {
+                    url:"collection/" + options.query
+                }));
             },
-            images: function(collectionId,options,doCache){
-                return lubTmdbHTTP(lubTmdbBaseURL+"collection/"+collectionId+"/images",options,doCache);
+            images:function (options) {
+                return lubTmdbHTTP(angular.extend({}, options, {
+                    url:"collection/" + options.query + "/images"
+                }));
             }
         };
     });

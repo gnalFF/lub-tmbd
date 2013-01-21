@@ -1,11 +1,15 @@
 angular.module('lub-tmdb-api-keyword', ['lub-tmdb-config','lub-tmdb-http'])
-    .factory('lubTmdbApiKeyword', function (lubTmdbBaseURL,lubTmdbHTTP) {
+    .factory('lubTmdbApiKeyword', function (lubTmdbHTTP) {
         return {
-            keyword:function (keywordId, params, doCache) {
-                return lubTmdbHTTP(lubTmdbBaseURL+'keyword/'+keywordId,params,doCache);
+            keyword:function (options) {
+                return lubTmdbHTTP(angular.extend({},options,{
+                    url : "keyword/"+options.query
+                }));
             },
-            movies:function (keywordId, params, doCache) {
-                return lubTmdbHTTP(lubTmdbBaseURL+'keyword/'+keywordId+"/movies",params,doCache);
+            movies:function (options) {
+                return lubTmdbHTTP(angular.extend({},options,{
+                    url : "keyword/"+options.query+"/movies"
+                }));
             }
         };
     });

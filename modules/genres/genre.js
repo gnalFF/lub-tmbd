@@ -1,11 +1,15 @@
 angular.module('lub-tmdb-api-genre', ['lub-tmdb-config', 'lub-tmdb-http'])
-    .factory('lubTmdbApiGenre', function (lubTmdbBaseURL, lubTmdbHTTP) {
+    .factory('lubTmdbApiGenre', function (lubTmdbHTTP) {
         return {
-            list:function (params,doCache) {
-                return lubTmdbHTTP(lubTmdbBaseURL + "genre/list",params,doCache);
+            list:function (options) {
+                return lubTmdbHTTP(angular.extend({}, options, {
+                    url:"genre/list"
+                }));
             },
-            movies:function (genreId,params,doCache) {
-                return lubTmdbHTTP(lubTmdbBaseURL + "genre/"+genreId+"/movies",params,doCache);
+            movies:function (options) {
+                return lubTmdbHTTP(angular.extend({}, options, {
+                    url:"genre/" + options.query + "/movies"
+                }));
             }
         };
     });
