@@ -18,6 +18,24 @@
 
             expect(success.results).toBe(1);
         }));
+        it('should append parameters if there are some', inject(function (lubTmdbBaseURL, lubTmdbApiKey, lubTmdbApiSearch, $httpBackend) {
+
+            $httpBackend.expectJSONP(/.*search\/movie.*/).respond(200, {results:1});
+
+            var success;
+            lubTmdbApiSearch.movie({
+                query: 'Terminator',
+                params: {
+                    page: 2
+                }
+            }).then(function (result) {
+                    success = result;
+                });
+            $httpBackend.flush();
+
+            expect(success.data.results).toBe(1);
+            expect(success.config.params.page).toBe(2);
+        }));
         it('should search a collection via jsonp', inject(function (lubTmdbBaseURL, lubTmdbApiKey, lubTmdbApiSearch, $httpBackend) {
 
             $httpBackend.expectJSONP(lubTmdbBaseURL+ "search/collection?api_key=" + lubTmdbApiKey + '&callback=JSON_CALLBACK&query=Terminator').respond(200, {results:1});

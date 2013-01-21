@@ -5,9 +5,9 @@
 angular.module('lub-tmdb-api-search', ['lub-tmdb-config','lub-tmdb-http'])
     .factory('lubTmdbApiSearch', function (lubTmdbHTTP) {
         var get = function (type, options) {
-            var opts = angular.extend({},options,{
+            var opts = angular.extend({},{
                 params: {}
-            });
+            },options);
             opts.params.query = opts.query;
             return lubTmdbHTTP(angular.extend({},opts,{
                 url : 'search/' + type
