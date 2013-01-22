@@ -10,7 +10,8 @@ angular.module('lub-tmdb-http', ['lub-tmdb-config'])
             }
             return $http[lubTmdbConnectionMethod](url, {
                 params:params,
-                cache:angular.isDefined(options.cache) ? options.cache : true
+                cache:angular.isDefined(options.cache) ? options.cache : true,
+                withCredentials: true
             });
         };
     });
