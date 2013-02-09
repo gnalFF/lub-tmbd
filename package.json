@@ -2,7 +2,7 @@
   "author": "https://github.com/gnalFF",
   "name": "lub-tmdb",
   "description": "AngularJS Tmdb API",
-  "version": "0.0.12",
+  "version": "0.1.0",
   "homepage": "https://github.com/gnalFF/lub-tmbd",
   "repository": {
     "type": "git",

@@ -8,7 +8,6 @@
                 result = res;
             });
             $httpBackend.flush();
-            dump(result);
             expect(result.data).toBe("hello");
         }));
         it('should make a jsonp request to get changes for people',inject(function(lubTmdbBaseURL,$httpBackend,lubTmdbApiChange){
