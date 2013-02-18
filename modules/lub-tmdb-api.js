@@ -8,7 +8,18 @@ angular.module('lub-tmdb-api', ['lub-tmdb-api-movie',
     'lub-tmdb-api-keyword',
     'lub-tmdb-api-genre',
     'lub-tmdb-api-company'])
-    .factory('lubTmdbApi', function (lubTmdbApiSearch, lubTmdbApiConfiguration, lubTmdbApiMovie, lubTmdbApiCollection, lubTmdbApiPeople, lubTmdbApiList, lubTmdbApiCompany, lubTmdbApiGenre, lubTmdbApiKeyword, lubTmdbApiChange) {
+    .factory('lubTmdbApi', [
+    "lubTmdbApiSearch",
+    "lubTmdbApiConfiguration",
+    "lubTmdbApiMovie",
+    "lubTmdbApiCollection",
+    "lubTmdbApiPeople",
+    "lubTmdbApiList",
+    "lubTmdbApiCompany",
+    "lubTmdbApiGenre",
+    "lubTmdbApiKeyword",
+    "lubTmdbApiChange",
+    function (lubTmdbApiSearch, lubTmdbApiConfiguration, lubTmdbApiMovie, lubTmdbApiCollection, lubTmdbApiPeople, lubTmdbApiList, lubTmdbApiCompany, lubTmdbApiGenre, lubTmdbApiKeyword, lubTmdbApiChange) {
         return {
             search:lubTmdbApiSearch,
             configuration:lubTmdbApiConfiguration,
@@ -21,4 +32,4 @@ angular.module('lub-tmdb-api', ['lub-tmdb-api-movie',
             keyword:lubTmdbApiKeyword,
             change:lubTmdbApiChange
         };
-    });
+    }]);

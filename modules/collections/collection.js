@@ -6,17 +6,17 @@
  * To change this template use File | Settings | File Templates.
  */
 angular.module('lub-tmdb-api-collection', ['lub-tmdb-config', 'lub-tmdb-http'])
-    .factory('lubTmdbApiCollection', function (lubTmdbHTTP) {
-        return {
-            collection:function (options) {
-                return lubTmdbHTTP(angular.extend({}, options, {
-                    url:"collection/" + options.query
-                }));
-            },
-            images:function (options) {
-                return lubTmdbHTTP(angular.extend({}, options, {
-                    url:"collection/" + options.query + "/images"
-                }));
-            }
-        };
-    });
+    .factory('lubTmdbApiCollection', ["lubTmdbHTTP", function (lubTmdbHTTP) {
+    return {
+        collection:function (options) {
+            return lubTmdbHTTP(angular.extend({}, options, {
+                url:"collection/" + options.query
+            }));
+        },
+        images:function (options) {
+            return lubTmdbHTTP(angular.extend({}, options, {
+                url:"collection/" + options.query + "/images"
+            }));
+        }
+    };
+}]);
