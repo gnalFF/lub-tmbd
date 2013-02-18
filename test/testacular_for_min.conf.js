@@ -12,7 +12,7 @@ files = [
     JASMINE_ADAPTER,
     'test/lib/angular.1.1.1.js',
     'test/lib/angular-mocks.1.1.1.js',
-    'build/v0.1.1/lub-tmdb.0.1.1.min.js',
+    'build/v0.2.0/lub-tmdb.0.2.0.min.js',
     'modules/*/test/*.js'
 ];
 

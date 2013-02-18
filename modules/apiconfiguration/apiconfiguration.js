@@ -3,7 +3,7 @@
  * http://docs.themoviedb.apiary.io/#configuration
  */
 angular.module('lub-tmdb-api-configuration', ['lub-tmdb-config', 'lub-tmdb-http'])
-    .factory('lubTmdbApiConfiguration', function (lubTmdbHTTP) {
+    .factory('lubTmdbApiConfiguration', ["lubTmdbHTTP",function (lubTmdbHTTP) {
         return {
             get:function (options) {
                 return lubTmdbHTTP(angular.extend({}, options, {
@@ -11,4 +11,4 @@ angular.module('lub-tmdb-api-configuration', ['lub-tmdb-config', 'lub-tmdb-http'
                 }));
             }
         };
-    });
+    }]);
