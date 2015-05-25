@@ -1,6 +1,6 @@
 /**
  * AngularJS Tmdb API
- * @version v0.2.0 - 2015-05-22
+ * @version v0.3.0 - 2015-05-25
  * @link https://github.com/gnalFF/lub-tmbd
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
@@ -282,6 +282,72 @@ angular.module('lub-tmdb-api-search', ['lub-tmdb-config', 'lub-tmdb-http'])
     };
 }]);
 
+/**
+ * Module dealing with tv related stuff.
+ * http://docs.themoviedb.apiary.io/#tv
+ */
+angular.module("lub-tmdb-api-tv", ['lub-tmdb-config', 'lub-tmdb-http'])
+    .factory('lubTmdbApiTv', ["$q", "lubTmdbHTTP", function ($q, lubTmdbHTTP) {
+    var noQuery = ['latest', 'airing_today', 'on_the_air', 'popular', 'top_rated'];
+    var get = function (options, type) {
+        var opts = options || {};
+        var action = type === '' ? '' : ('/' + type);
+        if (noQuery.indexOf(type) >= 0) {
+            delete opts.query;
+        }
+        if (!opts.query) {
+            if (noQuery.indexOf(type) < 0) {
+                return $q.reject();
+            }
+        } else {
+            action = '/' + opts.query + action;
+        }
+        return lubTmdbHTTP(angular.extend({}, opts, {
+            url:'tv' + action
+        }));
+    };
+    return {
+        tv:function (options) {
+            return get(options, '');
+        },
+        alternativeTitles:function (options) {
+            return get(options, 'alternative_titles');
+        },
+        images:function (options) {
+            return get(options, 'images');
+        },
+        keywords:function (options) {
+            return get(options, 'keywords');
+        },
+        videos:function (options) {
+            return get(options, 'videos');
+        },
+        translations:function (options) {
+            return get(options, 'translations');
+        },
+        similar:function (options) {
+            return get(options, 'similar');
+        },
+        changes:function (options) {
+            return get(options, 'changes');
+        },
+        latest:function (options) {
+            return get(options, 'keywords');
+        },
+        airingToday:function (options) {
+            return get(options, 'airing_today');
+        },
+        onTheAir:function (options) {
+            return get(options, 'on_the_air');
+        },
+        popular:function (options) {
+            return get(options, 'popular');
+        },
+        topRated:function (options) {
+            return get(options, 'top_rated');
+        }
+    };
+}]);
 angular.module('lub-tmdb-api', ['lub-tmdb-api-movie',
     'lub-tmdb-api-search',
     'lub-tmdb-api-configuration',
@@ -291,7 +357,8 @@ angular.module('lub-tmdb-api', ['lub-tmdb-api-movie',
     'lub-tmdb-api-change',
     'lub-tmdb-api-keyword',
     'lub-tmdb-api-genre',
-    'lub-tmdb-api-company'])
+    'lub-tmdb-api-company',
+    'lub-tmdb-api-tv'])
     .factory('lubTmdbApi', [
     "lubTmdbApiSearch",
     "lubTmdbApiConfiguration",
@@ -303,6 +370,7 @@ angular.module('lub-tmdb-api', ['lub-tmdb-api-movie',
     "lubTmdbApiGenre",
     "lubTmdbApiKeyword",
     "lubTmdbApiChange",
+    "lubTmdbApiTv",
     function (lubTmdbApiSearch, lubTmdbApiConfiguration, lubTmdbApiMovie, lubTmdbApiCollection, lubTmdbApiPeople, lubTmdbApiList, lubTmdbApiCompany, lubTmdbApiGenre, lubTmdbApiKeyword, lubTmdbApiChange) {
         return {
             search:lubTmdbApiSearch,
