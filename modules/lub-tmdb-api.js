@@ -7,7 +7,8 @@ angular.module('lub-tmdb-api', ['lub-tmdb-api-movie',
     'lub-tmdb-api-change',
     'lub-tmdb-api-keyword',
     'lub-tmdb-api-genre',
-    'lub-tmdb-api-company'])
+    'lub-tmdb-api-company',
+    'lub-tmdb-api-tv'])
     .factory('lubTmdbApi', [
     "lubTmdbApiSearch",
     "lubTmdbApiConfiguration",
@@ -19,6 +20,7 @@ angular.module('lub-tmdb-api', ['lub-tmdb-api-movie',
     "lubTmdbApiGenre",
     "lubTmdbApiKeyword",
     "lubTmdbApiChange",
+    "lubTmdbApiTv",
     function (lubTmdbApiSearch, lubTmdbApiConfiguration, lubTmdbApiMovie, lubTmdbApiCollection, lubTmdbApiPeople, lubTmdbApiList, lubTmdbApiCompany, lubTmdbApiGenre, lubTmdbApiKeyword, lubTmdbApiChange) {
         return {
             search:lubTmdbApiSearch,

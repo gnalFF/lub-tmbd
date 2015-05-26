@@ -64,5 +64,19 @@
 
             expect(success.results).toBe(1);
         }));
+        it('should search multi via jsonp', inject(function (lubTmdbBaseURL, lubTmdbApiKey, lubTmdbApiSearch, $httpBackend) {
+
+            $httpBackend.expectJSONP(lubTmdbBaseURL+ "search/multi?api_key=" + lubTmdbApiKey + '&callback=JSON_CALLBACK&query=Terminator').respond(200, {results:1});
+
+            var success;
+            lubTmdbApiSearch.multi({
+                query: 'Terminator'
+            }).then(function (result) {
+                success = result.data;
+            });
+            $httpBackend.flush();
+
+            expect(success.results).toBe(1);
+        }));
     });
 })();

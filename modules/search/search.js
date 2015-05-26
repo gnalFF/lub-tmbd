@@ -31,6 +31,9 @@ angular.module('lub-tmdb-api-search', ['lub-tmdb-config', 'lub-tmdb-http'])
         },
         keyword:function (options) {
             return get('keyword', options);
+        },
+        multi:function (options) {
+            return get('multi', options);
         }
     };
 }]);
